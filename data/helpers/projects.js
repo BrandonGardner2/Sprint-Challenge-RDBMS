@@ -9,15 +9,14 @@ async function getProjectById(id) {
   const project = await db("projects")
     .where({ id })
     .first();
-  const actions = await db("actions").where({ project_id: id });
-  if (project) {
-    return {
-      ...project,
-      actions
-    };
-  } else {
+  if (!project) {
     return false;
   }
+  const actions = await db("actions").where({ project_id: id });
+  return {
+    ...project,
+    actions
+  };
 }
 
 async function addProject(project) {
