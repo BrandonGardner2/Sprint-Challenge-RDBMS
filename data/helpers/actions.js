@@ -1,17 +1,18 @@
 const db = require("../config");
 
 module.exports = {
-  addAction
+  addAction,
+  getActions
 };
 
-async function addAction(action) {
-  try {
-    const [id] = await db("actions").insert(action);
+function getActions() {
+  return db("actions");
+}
 
-    return db("actions")
-      .where({ id })
-      .first();
-  } catch (error) {
-    return error;
-  }
+async function addAction(action) {
+  const [id] = await db("actions").insert(action);
+
+  return db("actions")
+    .where({ id })
+    .first();
 }
